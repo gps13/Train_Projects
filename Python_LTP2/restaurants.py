@@ -17,12 +17,24 @@ def is_palindrome_v1(s):
     >>> print is_palindrome('dented')
     False
 	'''
-    if s=='':
-        return True
-    elif s[0]==s[-1]:
-        return is_palindrome(s[1:-1])
-    else:
-        return False
+	return reverse(s)==s
+
+
+def reverse(s):
+	'''(str) -> str
+
+	Return reversed s
+	'''
+	for char in s:
+		rev += ch
+
+	return rev
+    # if s=='':
+    #     return True
+    # elif s[0]==s[-1]:
+    #     return is_palindrome(s[1:-1])
+    # else:
+    #     return False
        
 print is_palindrome('')
 #>>> True
