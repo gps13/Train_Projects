@@ -51,9 +51,12 @@ def swap_k(L, k):
     [5, 6, 3, 4, 1, 2]
     >>> swap_k([1, 2, 3, 4, 5, 6], 3)
     [4, 5, 6, 1, 2, 3]  
+    >>> swap_k([1, 2], 1)
+    [2, 1] 
     """
     for num in range(k):
-        # CORRECT  L[num],L[len(L)-2+num]=L[len(L)-2+num], L[num]
+        # CORRECT  
+        # L[num],L[len(L)-k+num]=L[len(L)-k+num], L[num]
         # BUGGY
         L[num],L[len(L)-2]=L[len(L)-2], L[num]
     return L
