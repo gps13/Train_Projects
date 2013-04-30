@@ -90,4 +90,32 @@ class Rat:
 class Maze:
     """ A 2D maze. """
 
-    # Write your Maze methods here.
+    def __init__(self, maze, rat_1, rat_2):
+        """ (Maze, list of list of str, Rat, Rat) -> NoneType
+
+        maze initializetion
+
+        >>> mymaze = Maze([['#', '#', '#', '#', '#', '#', '#'], 
+      ['#', '.', '.', '.', '.', '.', '#'], 
+      ['#', '.', '#', '#', '#', '.', '#'], 
+      ['#', '.', '.', '@', '#', '.', '#'], 
+      ['#', '@', '#', '.', '@', '.', '#'], 
+      ['#', '#', '#', '#', '#', '#', '#']], 
+      Rat('J', 1, 1),
+      Rat('P', 1, 4))
+        """
+        self.maze = maze
+        self.rat_1 = rat_1
+        self.rat_2 = rat_2
+        self.num_sprous_left = 3
+
+    def is_wall(self, row, col):
+        """ (Rat, int, int) -> NoneType
+
+        rat location
+
+        >>> rat1 = Rat('P', 1, 4)
+        >>> rat1.set_location(2,3)
+        """
+        self.row = row
+        self.col = col
