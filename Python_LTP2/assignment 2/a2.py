@@ -110,12 +110,84 @@ class Maze:
         self.num_sprous_left = 3
 
     def is_wall(self, row, col):
-        """ (Rat, int, int) -> NoneType
+        """ (Maze, int, int) -> bool
 
-        rat location
+        if there is a wall at the given row and column of the maze.
 
-        >>> rat1 = Rat('P', 1, 4)
-        >>> rat1.set_location(2,3)
+        >>> mymaze = Maze([['#', '#', '#', '#', '#', '#', '#'], 
+      ['#', '.', '.', '.', '.', '.', '#'], 
+      ['#', '.', '#', '#', '#', '.', '#'], 
+      ['#', '.', '.', '@', '#', '.', '#'], 
+      ['#', '@', '#', '.', '@', '.', '#'], 
+      ['#', '#', '#', '#', '#', '#', '#']], 
+      Rat('J', 1, 1),
+      Rat('P', 1, 4))
+        >>> mymaze.is_wall(1,0)
+        True
         """
-        self.row = row
-        self.col = col
+        return self.maze[row][col] == WALL
+
+    def get_character(self, row, col):
+        """ (Maze, int, int) -> str
+
+        Return the character in the maze at the given row and column.
+        If there is a rat at that location, then its character should be returned rather than HALL.
+
+        >>> mymaze = Maze([['#', '#', '#', '#', '#', '#', '#'], 
+      ['#', '.', '.', '.', '.', '.', '#'], 
+      ['#', '.', '#', '#', '#', '.', '#'], 
+      ['#', '.', '.', '@', '#', '.', '#'], 
+      ['#', '@', '#', '.', '@', '.', '#'], 
+      ['#', '#', '#', '#', '#', '#', '#']], 
+      Rat('J', 1, 1),
+      Rat('P', 1, 4))
+        >>> mymaze.get_character(0,0)
+        '#'
+        >>> mymaze.get_character(2,1)
+        '.'
+        >>> mymaze.get_character(4,1)
+        '@'
+        >>> mymaze.get_character(1,1)
+        'J'
+        >>> mymaze.get_character(1,4)
+        'P'
+        """
+        if [self.rat_1.row,self.rat_1.col] == [row,col]:
+            return self.rat_1.symbol
+        elif [self.rat_2.row,self.rat_2.col] == [row,col]:
+            return self.rat_2.symbol
+        else:
+            return self.maze[row][col]
+
+    def move(self, Rat, vertical, horizonatl):
+        """ Maze, Rat, int, int) -> bool
+
+       Move the rat in the given direction, unless there is a wall in the way. 
+       Also, check for a Brussels sprout at that location
+       Return True if and only if there wasn't a wall in the way.
+
+        >>> mymaze = Maze([['#', '#', '#', '#', '#', '#', '#'], 
+      ['#', '.', '.', '.', '.', '.', '#'], 
+      ['#', '.', '#', '#', '#', '.', '#'], 
+      ['#', '.', '.', '@', '#', '.', '#'], 
+      ['#', '@', '#', '.', '@', '.', '#'], 
+      ['#', '#', '#', '#', '#', '#', '#']], 
+      Rat('J', 1, 1),
+      Rat('P', 1, 4))
+        >>> mymaze.get_character(0,0)
+        '#'
+        >>> mymaze.get_character(2,1)
+        '.'
+        >>> mymaze.get_character(4,1)
+        '@'
+        >>> mymaze.get_character(1,1)
+        'J'
+        >>> mymaze.get_character(1,4)
+        'P'
+        """
+        if [self.rat_1.row,self.rat_1.col] == [row,col]:
+            return self.rat_1.symbol
+        elif [self.rat_2.row,self.rat_2.col] == [row,col]:
+            return self.rat_2.symbol
+        else:
+            return self.maze[row][col]
