@@ -40,7 +40,7 @@ class Rat:
 
 		rat initializetion
 
-        >>> Rat('P', 1, 4)
+        >>> rat1 = Rat('P', 1, 4)
         """
         self.symbol = symbol
         self.row = row
@@ -79,7 +79,8 @@ class Rat:
         >>> rat1.set_location(4,3)
         >>> rat1.eat_sprout()
         >>> rat1.eat_sprout()
-        'J at (4, 3) ate 2 sprouts.'
+        >>> print rat1
+        J at (4, 3) ate 2 sprouts.
 
         """
 
