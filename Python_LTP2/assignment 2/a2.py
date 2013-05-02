@@ -45,7 +45,7 @@ class Rat:
         self.symbol = symbol
         self.row = row
         self.col = col
-        self.num_sprous_eaten = 0
+        self.num_sprouts_eaten = 0
     
 
     def set_location(self, row, col):
@@ -67,7 +67,7 @@ class Rat:
         >>> rat1.set_location(2,3)
         >>> rat1.eat_sprout()
         """
-        self.num_sprous_eaten += 1
+        self.num_sprouts_eaten += 1
 
     def __str__(self):
         """ (Rat) -> str
@@ -84,7 +84,7 @@ class Rat:
 
         """
 
-        result = self.symbol + ' at ('+str(self.row)+', '+str(self.col)+') ate '+str(self.num_sprous_eaten)+' sprouts.'
+        result = self.symbol + ' at ('+str(self.row)+', '+str(self.col)+') ate '+str(self.num_sprouts_eaten)+' sprouts.'
         return result
 
 class Maze:
@@ -107,7 +107,9 @@ class Maze:
         self.maze = maze
         self.rat_1 = rat_1
         self.rat_2 = rat_2
-        self.num_sprous_left = 3
+        self.num_sprouts_left=0
+        for sprouts in self.maze:
+            self.num_sprouts_left += sprouts.count(SPROUT)
 
     def is_wall(self, row, col):
         """ (Maze, int, int) -> bool
@@ -159,7 +161,7 @@ class Maze:
         else:
             return self.maze[row][col]
 
-    def move(self, Rat, vertical, horizonatl):
+    def move(self, rat_move, vertical, horizontal):
         """ Maze, Rat, int, int) -> bool
 
        Move the rat in the given direction, unless there is a wall in the way. 
@@ -174,20 +176,61 @@ class Maze:
       ['#', '#', '#', '#', '#', '#', '#']], 
       Rat('J', 1, 1),
       Rat('P', 1, 4))
-        >>> mymaze.get_character(0,0)
-        '#'
-        >>> mymaze.get_character(2,1)
-        '.'
-        >>> mymaze.get_character(4,1)
-        '@'
-        >>> mymaze.get_character(1,1)
-        'J'
-        >>> mymaze.get_character(1,4)
-        'P'
+        >>> mymaze.move('J','UP','NO_CHANGE')
+        False
+        >>> mymaze.move('J','DOWN','NO_CHANGE')
+        True
+        >>> mymaze.move('P','NO_CHANGE','RIGHT')
+        True
+        >>> mymaze.move('J','DOWN','NO_CHANGE')
+        True
+        >>> mymaze.move('J','DOWN','NO_CHANGE')
+        True
+        >>> mymaze.move('J','DOWN','NO_CHANGE')
+        True
+
         """
-        if [self.rat_1.row,self.rat_1.col] == [row,col]:
-            return self.rat_1.symbol
-        elif [self.rat_2.row,self.rat_2.col] == [row,col]:
-            return self.rat_2.symbol
+        next_row = rat_move.row+vertical
+        next_col = rat_move.col+horizontal
+
+        if self.maze[next_row][next_col] == WALL:
+            return False
+        elif self.maze.get_character(next_row,next_col) == SPROUT:
+            rat_move.eat_sprout
+            self.maze[next_row][next_col] = HALL
+            self.maze.num_sprouts_left -= 1
+            return True
         else:
-            return self.maze[row][col]
+            return True
+
+
+    def __str__(self):
+        """ (Maze) -> str
+
+       Return a string representation of the maze
+
+        >>> mymaze = Maze([['#', '#', '#', '#', '#', '#', '#'], 
+      ['#', '.', '.', '.', '.', '.', '#'], 
+      ['#', '.', '#', '#', '#', '.', '#'], 
+      ['#', '.', '.', '@', '#', '.', '#'], 
+      ['#', '@', '#', '.', '@', '.', '#'], 
+      ['#', '#', '#', '#', '#', '#', '#']], 
+      Rat('J', 1, 1),
+      Rat('P', 1, 4))
+        >>> print mymaze
+        #######
+        #J..P.#
+        #.###.#
+        #..@#.#
+        #@#.@.#
+        #######
+        J at (1, 1) ate 0 sprouts.
+        P at (1, 4) ate 0 sprouts.
+
+        """
+        result = ''
+        self.maze[self.rat_1.row][self.rat_1.col] = self.rat_1.symbol
+        self.maze[self.rat_2.row][self.rat_2.col] = self.rat_2.symbol
+        for i in self.maze:
+            result += ''.join(i) + '\n'
+        return result + str(self.rat_1) + '\n' + str(self.rat_2)
